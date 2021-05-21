@@ -11,6 +11,8 @@ import controlefinanceiro.suporte.IDAOT;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,10 +29,16 @@ public class IntegranteDAO implements IDAOT<Integrante> {
 
             String sql = "";
 
-            sql = "INSERT INTO integrante VALUES ("
-                    + "(SELECT COALESCE(MAX(id), 0) + 1 FROM integrante), "
-                    + "" + o.getPessoaId() + ","
-                    + "'" + o.getNome() + "')";
+            if (o.getId() == 0) {
+                sql = "INSERT INTO integrante VALUES ("
+                        + "(SELECT COALESCE(MAX(id), 0) + 1 FROM integrante), "
+                        + "" + o.getPessoaId() + ","
+                        + "'" + o.getNome() + "')";
+            } else {
+                sql = "UPDATE integrante SET "
+                        + "nome = '" + o.getNome() + "' "
+                        + "WHERE id = " + o.getId();
+            }
 
             System.out.println("SQL: " + sql + "\n");
 
@@ -81,7 +89,7 @@ public class IntegranteDAO implements IDAOT<Integrante> {
             String sql = "SELECT EXISTS("
                     + "SELECT * "
                     + "FROM integrante "
-                    + "WHERE nome = '" + criterio + "')";
+                    + "WHERE nome = '" + criterio + "' AND pessoa_id = " + System.getProperty("Login") + ")";
 
             System.out.println("SQL: " + sql + "\n");
 
@@ -97,12 +105,107 @@ public class IntegranteDAO implements IDAOT<Integrante> {
     }
 
     @Override
-    public boolean atualizar(Integrante o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean excluir(int id) {
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "DELETE FROM integrante "
+                    + "WHERE id = " + id;
+
+            System.out.println("SQL: " + sql + "\n");
+
+            st.executeUpdate(sql);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void popularTabela(JTable tabela, String criterio) {
+        // dados da tabela
+        Object[][] dadosTabela = null;
+        // cabecalho da tabela
+        Object[] cabecalho = new Object[2];
+        cabecalho[0] = "Código";
+        cabecalho[1] = "Nome";
+
+        // cria matriz de acordo com nº de registros da tabela
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT COUNT(*) "
+                    + "FROM( "
+                    + "SELECT i.id, i.nome "
+                    + "FROM integrante i "
+                    + "WHERE i.pessoa_id = " + System.getProperty("Login") + " "
+                    + "UNION "
+                    + "SELECT p.id, p.nome "
+                    + "FROM pessoa p "
+                    + "WHERE p.id = " + System.getProperty("Login") + " "
+                    + ") as resultado "
+                    + "WHERE resultado.nome ILIKE '%" + criterio + "%' ";
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            resultadoQ.next();
+
+            dadosTabela = new Object[resultadoQ.getInt(1)][2];
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar a tabela: " + e + "\n");
+        }
+
+        int lin = 0;
+
+        // efetua consulta na tabela
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT * "
+                    + "FROM( "
+                    + "SELECT i.id, i.nome "
+                    + "FROM integrante i "
+                    + "WHERE i.pessoa_id = " + System.getProperty("Login") + " "
+                    + "UNION "
+                    + "SELECT p.id, p.nome "
+                    + "FROM pessoa p "
+                    + "WHERE p.id = " + System.getProperty("Login") + " "
+                    + ") as resultado "
+                    + "WHERE resultado.nome ILIKE '%" + criterio + "%' "
+                    + "ORDER BY resultado.id";
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            while (resultadoQ.next()) {
+                dadosTabela[lin][0] = resultadoQ.getString("id");
+                if (System.getProperty("Login").equals(resultadoQ.getString("id"))
+                        && new PessoaDAO().consultar(Integer.parseInt(System.getProperty("Login"))).getNome().equals(resultadoQ.getString("nome"))) {
+                    dadosTabela[lin][1] = resultadoQ.getString("nome") + " (Admin)";
+                } else {
+                    dadosTabela[lin][1] = resultadoQ.getString("nome");
+                }
+                lin++;
+            }
+        } catch (Exception e) {
+            System.out.println("problemas para popular a tabela ...\n");
+        }
+
+        tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        tabela.setSelectionMode(0);
     }
 
     @Override
-    public boolean excluir(int id) {
+    public boolean atualizar(Integrante o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

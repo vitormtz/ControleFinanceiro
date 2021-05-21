@@ -214,7 +214,33 @@ public class PessoaDAO implements IDAOT<Pessoa> {
 
     @Override
     public boolean salvar(Pessoa o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "";
+
+            if (o.getId() == 0) {
+                sql = "INSERT INTO pessoa VALUES ("
+                        + "(SELECT COALESCE(MAX(id), 0) + 1 FROM integrante), "
+                        + "'" + o.getNome() + "', "
+                        + "'" + o.getEmail() + "', "
+                        + "md5('" + o.getSenha() + "'))";
+            } else {
+                sql = "UPDATE pessoa SET "
+                        + "nome = '" + o.getNome() + "' "
+                        + "WHERE id = " + o.getId();
+            }
+
+            System.out.println("SQL: " + sql + "\n");
+
+            st.executeUpdate(sql);
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar pessoa: " + e + "\n");
+            return false;
+        }
     }
 
     @Override
