@@ -5,6 +5,7 @@
  */
 package controlefinanceiro.persistencia;
 
+import controlefinanceiro.negocio.Integrante;
 import controlefinanceiro.negocio.Pessoa;
 import controlefinanceiro.suporte.ConexaoBD;
 import controlefinanceiro.suporte.IDAOT;
@@ -21,6 +22,36 @@ import javax.swing.table.DefaultTableModel;
 public class PessoaDAO implements IDAOT<Pessoa> {
 
     ResultSet resultadoQ = null;
+
+    @Override
+    public boolean salvar(Pessoa o) {
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "";
+
+            if (o.getId() == 0) {
+                sql = "INSERT INTO pessoa VALUES ("
+                        + "(SELECT COALESCE(MAX(id), 0) + 1 FROM pessoa), "
+                        + "'" + o.getNome() + "', "
+                        + "'" + o.getEmail() + "', "
+                        + "md5('" + o.getSenha() + "'))";
+            } else {
+                sql = "UPDATE pessoa SET "
+                        + "nome = '" + o.getNome() + "' "
+                        + "WHERE id = " + o.getId();
+            }
+
+            System.out.println("SQL: " + sql + "\n");
+
+            st.executeUpdate(sql);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar pessoa: " + e + "\n");
+            return false;
+        }
+    }
 
     @Override
     public Pessoa consultar(String email) {
@@ -94,6 +125,24 @@ public class PessoaDAO implements IDAOT<Pessoa> {
             return resultadoQ.next();
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean excluir(int id) {
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "DELETE FROM pessoa "
+                    + "WHERE id = " + id;
+
+            System.out.println("SQL: " + sql + "\n");
+
+            st.executeUpdate(sql);
+
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
@@ -213,43 +262,7 @@ public class PessoaDAO implements IDAOT<Pessoa> {
     }
 
     @Override
-    public boolean salvar(Pessoa o) {
-        try {
-            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-
-            String sql = "";
-
-            if (o.getId() == 0) {
-                sql = "INSERT INTO pessoa VALUES ("
-                        + "(SELECT COALESCE(MAX(id), 0) + 1 FROM integrante), "
-                        + "'" + o.getNome() + "', "
-                        + "'" + o.getEmail() + "', "
-                        + "md5('" + o.getSenha() + "'))";
-            } else {
-                sql = "UPDATE pessoa SET "
-                        + "nome = '" + o.getNome() + "' "
-                        + "WHERE id = " + o.getId();
-            }
-
-            System.out.println("SQL: " + sql + "\n");
-
-            st.executeUpdate(sql);
-
-            return true;
-
-        } catch (Exception e) {
-            System.out.println("Erro ao salvar pessoa: " + e + "\n");
-            return false;
-        }
-    }
-
-    @Override
     public boolean atualizar(Pessoa o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean excluir(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -260,6 +273,24 @@ public class PessoaDAO implements IDAOT<Pessoa> {
 
     @Override
     public Integer consultarUltimoId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pessoa pessoa = null;
+
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT MAX(id) AS id "
+                    + "FROM pessoa ";
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            resultadoQ.next();
+
+            return Integer.parseInt(resultadoQ.getString("id"));
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar pessoa: " + e + "\n");
+            return -1;
+        }
     }
 }
