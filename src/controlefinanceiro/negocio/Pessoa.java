@@ -29,6 +29,14 @@ public class Pessoa {
     }
 
     public void setNome(String nome) {
+        if (nome == null) {
+            nome = "";
+        } else {
+            nome = nome.replaceAll("\\d", "");
+            if (nome.length() > 50) {
+                nome = nome.substring(0, 50);
+            }
+        }
         this.nome = nome;
     }
 
