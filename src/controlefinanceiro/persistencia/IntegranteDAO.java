@@ -80,30 +80,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
         return integrante;
     }
 
-    public boolean verificar(String criterio) {
-        Integrante integrante = null;
-
-        try {
-            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-
-            String sql = "SELECT EXISTS("
-                    + "SELECT * "
-                    + "FROM integrante "
-                    + "WHERE nome = '" + criterio + "' AND pessoa_id = " + System.getProperty("Login") + ")";
-
-            System.out.println("SQL: " + sql + "\n");
-
-            resultadoQ = st.executeQuery(sql);
-
-            resultadoQ.next();
-
-            return resultadoQ.getBoolean("exists");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     @Override
     public boolean excluir(int id) {
         try {
@@ -118,6 +94,36 @@ public class IntegranteDAO implements IDAOT<Integrante> {
 
             return true;
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean verificar(String criterio) {
+        Integrante integrante = null;
+        
+        if(System.getProperty("Login") != null){
+           criterio += "' AND pessoa_id = " +  System.getProperty("Login") + ")";
+        }else{
+            criterio += "')";
+        }
+
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT EXISTS("
+                    + "SELECT * "
+                    + "FROM integrante "
+                    + "WHERE nome = '" + criterio;
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            resultadoQ.next();
+
+            return resultadoQ.getBoolean("exists");
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -216,11 +222,52 @@ public class IntegranteDAO implements IDAOT<Integrante> {
 
     @Override
     public Integrante consultar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Integrante integrante = null;
+
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT * "
+                    + "FROM integrante "
+                    + "WHERE id = " + id;
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            if (resultadoQ.next()) {
+                integrante = new Integrante();
+
+                integrante.setId(resultadoQ.getInt("id"));
+                integrante.setPessoaId(resultadoQ.getInt("pessoa_id"));
+                integrante.setNome(resultadoQ.getString("nome"));
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar pessoa: " + e + "\n");
+        }
+        return integrante;
     }
 
     @Override
     public Integer consultarUltimoId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Integrante integrante = null;
+
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "SELECT MAX(id) AS id "
+                    + "FROM integrante ";
+
+            System.out.println("SQL: " + sql + "\n");
+
+            resultadoQ = st.executeQuery(sql);
+
+            resultadoQ.next();
+
+            return Integer.parseInt(resultadoQ.getString("id"));
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar pessoa: " + e + "\n");
+            return -1;
+        }
     }
 }
