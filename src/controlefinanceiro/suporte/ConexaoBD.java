@@ -8,9 +8,7 @@ package controlefinanceiro.suporte;
  *
  * @author fabricio.pretto
  */
-import java.io.*;
 import java.sql.*;
-import java.util.*;
 
 public class ConexaoBD {
 
@@ -20,12 +18,10 @@ public class ConexaoBD {
     public ConexaoBD() {
         try {
             // Carrega informações do arquivo de propriedades
-            Properties prop = new Properties();
-            prop.load(new FileInputStream("db.properties"));
-            String dbdriver = prop.getProperty("db.driver");
-            String dburl = prop.getProperty("db.url");
-            String dbuser = prop.getProperty("db.user");
-            String dbsenha = prop.getProperty("db.senha");
+            String dbdriver = "org.postgresql.Driver";
+            String dburl = "jdbc:postgresql://localhost:5432/ControleFinanceiro";
+            String dbuser = "postgres";
+            String dbsenha = "postgres";
 
             // Carrega Driver do Banco de Dados
             Class.forName(dbdriver);
