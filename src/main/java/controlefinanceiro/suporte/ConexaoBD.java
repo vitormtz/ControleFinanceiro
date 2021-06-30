@@ -19,7 +19,7 @@ public class ConexaoBD {
         try {
             // Carrega informações do arquivo de propriedades
             String dbdriver = "org.postgresql.Driver";
-            String dburl = "jdbc:postgresql://localhost:5432/ControleFinanceiro";
+            String dburl = "jdbc:postgresql://localhost:5432/controlefinanceiro";
             String dbuser = "postgres";
             String dbsenha = "postgres";
 
