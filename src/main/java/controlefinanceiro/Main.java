@@ -6,6 +6,7 @@
 package controlefinanceiro;
 
 import controlefinanceiro.apresentacao.FrmLogin;
+import controlefinanceiro.persistencia.PessoaDAO;
 
 /**
  *
@@ -17,7 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("Esta é a aplicação do Vitor");
+        System.out.println(new PessoaDAO().consultar(1).getEmail());
 
-        new FrmLogin().setVisible(true);
+        //new FrmLogin().setVisible(true);
     }
 }
