@@ -52,7 +52,7 @@ public class FrmLogin extends javax.swing.JFrame {
         lblSenha = new javax.swing.JLabel();
         pfdSenha = new JPasswordFieldExcetoCaracteres(25, "");
         btnEntrar = new javax.swing.JButton();
-        lblEspaçamento = new javax.swing.JLabel();
+        lblEspacamento = new javax.swing.JLabel();
         btnSair = new javax.swing.JButton();
         lblAvisoLogin = new javax.swing.JLabel();
 
@@ -80,8 +80,8 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        lblEspaçamento.setText("Espaçamento");
-        lblEspaçamento.setText("");
+        lblEspacamento.setText("Espaçamento");
+        lblEspacamento.setText("");
 
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,7 @@ public class FrmLogin extends javax.swing.JFrame {
                         .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(tfdEmail, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(pfdSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblEspaçamento)
+                    .addComponent(lblEspacamento)
                     .addGroup(pnlLoginLayout.createSequentialGroup()
                         .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -133,7 +133,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAvisoLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblEspaçamento)
+                .addComponent(lblEspacamento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +187,7 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel lblAvisoLogin;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblEspaçamento;
+    private javax.swing.JLabel lblEspacamento;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JPasswordField pfdSenha;

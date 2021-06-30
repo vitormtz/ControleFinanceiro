@@ -64,7 +64,7 @@
                           <Component id="tfdEmail" alignment="0" max="32767" attributes="0"/>
                           <Component id="pfdSenha" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="lblEspaçamento" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEspacamento" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnEntrar" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblAvisoLogin" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblEspaçamento" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblEspacamento" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnEntrar" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -142,12 +142,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblEspa&#xe7;amento">
+        <Component class="javax.swing.JLabel" name="lblEspacamento">
           <Properties>
             <Property name="text" type="java.lang.String" value="Espa&#xe7;amento"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lblEspa&#xe7;amento.setText(&quot;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lblEspacamento.setText(&quot;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
