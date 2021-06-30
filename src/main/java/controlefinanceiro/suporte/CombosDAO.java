@@ -39,8 +39,6 @@ public class CombosDAO {
                     + "FROM " + tabela + " "
                     + complementoSQL;
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             if (resultadoQ.isBeforeFirst()) {
@@ -52,7 +50,6 @@ public class CombosDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Erro ao popular Combo = " + e.toString());
         }
     }
 
@@ -79,7 +76,6 @@ public class CombosDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Erro ao popular Combo = " + e.toString());
         }
     }
 

@@ -36,14 +36,11 @@ public class DespesaDAO implements IDAOT<Despesa> {
                     + "'" + o.getDescricao() + "', "
                     + "(SELECT current_timestamp))";
 
-            System.out.println("SQL: " + sql + "\n");
-
             st.executeUpdate(sql);
 
             return true;
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar pessoa: " + e + "\n");
             return false;
         }
     }
@@ -55,8 +52,6 @@ public class DespesaDAO implements IDAOT<Despesa> {
 
             String sql = "DELETE FROM despesa "
                     + "WHERE id = " + id;
-
-            System.out.println("SQL: " + sql + "\n");
 
             st.executeUpdate(sql);
 

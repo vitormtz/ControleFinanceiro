@@ -40,14 +40,11 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                         + "WHERE id = " + o.getId();
             }
 
-            System.out.println("SQL: " + sql + "\n");
-
             st.executeUpdate(sql);
 
             return true;
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar pessoa: " + e + "\n");
             return false;
         }
     }
@@ -63,8 +60,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                     + "FROM integrante "
                     + "WHERE nome = '" + criterio + "'";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             if (resultadoQ.next()) {
@@ -75,7 +70,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                 integrante.setNome(resultadoQ.getString("nome"));
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
         }
         return integrante;
     }
@@ -88,8 +82,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
             String sql = "DELETE FROM integrante "
                     + "WHERE id = " + id;
 
-            System.out.println("SQL: " + sql + "\n");
-
             st.executeUpdate(sql);
 
             return true;
@@ -100,10 +92,10 @@ public class IntegranteDAO implements IDAOT<Integrante> {
 
     public boolean verificar(String criterio) {
         Integrante integrante = null;
-        
-        if(System.getProperty("Login") != null){
-           criterio += "' AND pessoa_id = " +  System.getProperty("Login") + ")";
-        }else{
+
+        if (System.getProperty("Login") != null) {
+            criterio += "' AND pessoa_id = " + System.getProperty("Login") + ")";
+        } else {
             criterio += "')";
         }
 
@@ -114,8 +106,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                     + "SELECT * "
                     + "FROM integrante "
                     + "WHERE nome = '" + criterio;
-
-            System.out.println("SQL: " + sql + "\n");
 
             resultadoQ = st.executeQuery(sql);
 
@@ -152,8 +142,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                     + ") as resultado "
                     + "WHERE resultado.nome ILIKE '%" + criterio + "%' ";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             resultadoQ.next();
@@ -161,7 +149,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
             dadosTabela = new Object[resultadoQ.getInt(1)][2];
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar a tabela: " + e + "\n");
         }
 
         int lin = 0;
@@ -183,8 +170,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                     + "WHERE resultado.nome ILIKE '%" + criterio + "%' "
                     + "ORDER BY resultado.id";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             while (resultadoQ.next()) {
@@ -198,7 +183,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                 lin++;
             }
         } catch (Exception e) {
-            System.out.println("problemas para popular a tabela ...\n");
         }
 
         tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
@@ -231,8 +215,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                     + "FROM integrante "
                     + "WHERE id = " + id;
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             if (resultadoQ.next()) {
@@ -243,7 +225,6 @@ public class IntegranteDAO implements IDAOT<Integrante> {
                 integrante.setNome(resultadoQ.getString("nome"));
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
         }
         return integrante;
     }
@@ -258,15 +239,12 @@ public class IntegranteDAO implements IDAOT<Integrante> {
             String sql = "SELECT MAX(id) AS id "
                     + "FROM integrante ";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             resultadoQ.next();
 
             return Integer.parseInt(resultadoQ.getString("id"));
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
             return -1;
         }
     }

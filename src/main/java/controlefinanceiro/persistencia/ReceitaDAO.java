@@ -32,14 +32,11 @@ public class ReceitaDAO implements IDAOT<Receita> {
                     + "'" + o.getDescricao() + "', "
                     + "(SELECT current_timestamp))";
 
-            System.out.println("SQL: " + sql + "\n");
-
             st.executeUpdate(sql);
 
             return true;
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar pessoa: " + e + "\n");
             return false;
         }
     }
@@ -51,8 +48,6 @@ public class ReceitaDAO implements IDAOT<Receita> {
 
             String sql = "DELETE FROM receita "
                     + "WHERE id = " + id;
-
-            System.out.println("SQL: " + sql + "\n");
 
             st.executeUpdate(sql);
 

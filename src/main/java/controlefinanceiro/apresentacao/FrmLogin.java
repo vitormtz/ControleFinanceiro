@@ -32,7 +32,6 @@ public class FrmLogin extends javax.swing.JFrame {
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Erro ao aplicar Look and Feel: " + e);
         }
     }
 

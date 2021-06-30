@@ -41,13 +41,10 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                         + "WHERE id = " + o.getId();
             }
 
-            System.out.println("SQL: " + sql + "\n");
-
             st.executeUpdate(sql);
 
             return true;
         } catch (Exception e) {
-            System.out.println("Erro ao salvar pessoa: " + e + "\n");
             return false;
         }
     }
@@ -63,8 +60,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                     + "FROM pessoa "
                     + "WHERE email = '" + email + "'";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             if (resultadoQ.next()) {
@@ -75,7 +70,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                 pessoa.setEmail(resultadoQ.getString("email"));
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
         }
         return pessoa;
     }
@@ -91,8 +85,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                     + "FROM pessoa "
                     + "WHERE id = " + id;
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             if (resultadoQ.next()) {
@@ -103,7 +95,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                 pessoa.setEmail(resultadoQ.getString("email"));
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
         }
         return pessoa;
     }
@@ -116,8 +107,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                     + "FROM pessoa "
                     + "WHERE email = '" + email + "' "
                     + "AND senha = md5('" + senha + "')";
-
-            System.out.println("SQL: " + sql + "\n");
 
             resultadoQ = st.executeQuery(sql);
 
@@ -135,8 +124,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
 
             String sql = "DELETE FROM pessoa "
                     + "WHERE id = " + id;
-
-            System.out.println("SQL: " + sql + "\n");
 
             st.executeUpdate(sql);
 
@@ -184,8 +171,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                     + "FROM receita r INNER JOIN pessoa p ON r.pessoa_id = p.id)) AS resultado "
                     + "WHERE " + parametro;
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             resultadoQ.next();
@@ -193,7 +178,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
             dadosTabela = new Object[resultadoQ.getInt(1)][8];
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar a tabela: " + e + "\n");
         }
 
         int lin = 0;
@@ -219,8 +203,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                     + "WHERE " + parametro + " "
                     + "ORDER BY resultado.data_acao";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             while (resultadoQ.next()) {
@@ -242,7 +224,6 @@ public class PessoaDAO implements IDAOT<Pessoa> {
                 lin++;
             }
         } catch (Exception e) {
-            System.out.println("problemas para popular a tabela ...\n");
         }
 
         tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
@@ -280,15 +261,12 @@ public class PessoaDAO implements IDAOT<Pessoa> {
             String sql = "SELECT MAX(id) AS id "
                     + "FROM pessoa ";
 
-            System.out.println("SQL: " + sql + "\n");
-
             resultadoQ = st.executeQuery(sql);
 
             resultadoQ.next();
 
             return Integer.parseInt(resultadoQ.getString("id"));
         } catch (Exception e) {
-            System.out.println("Erro ao consultar pessoa: " + e + "\n");
             return -1;
         }
     }
