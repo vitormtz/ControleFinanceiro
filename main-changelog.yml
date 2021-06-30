@@ -9,5 +9,3 @@ databaseChangeLog:
     file: src\main\java\controlefinanceiro\migracoes\V1.4_create_table_despesa.sql
  - include:
     file: src\main\java\controlefinanceiro\migracoes\V1.5_create_table_receita.sql
- - include:
-    file: src\main\java\controlefinanceiro\migracoes\V1.6_create_table_tipo.sql
