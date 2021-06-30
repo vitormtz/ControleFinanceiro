@@ -1,6 +1,6 @@
 databaseChangeLog:
  - include:
-     file: src\main\java\controlefinanceiro\migracoes\V1.1_create_table_tipo_despesa.sql
+    file: src\main\java\controlefinanceiro\migracoes\V1.1_create_table_tipo_despesa.sql
  - include:
     file: src\main\java\controlefinanceiro\migracoes\V1.2_create_table_pessoa.sql
  - include:
@@ -10,4 +10,4 @@ databaseChangeLog:
  - include:
     file: src\main\java\controlefinanceiro\migracoes\V1.5_create_table_receita.sql
  - include:
-   file: src\main\java\controlefinanceiro\migracoes\V1.6_create_table_tipo.sql
+    file: src\main\java\controlefinanceiro\migracoes\V1.6_create_table_tipo.sql
